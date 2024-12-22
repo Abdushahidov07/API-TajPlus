@@ -169,3 +169,5 @@ class Message(models.Model):
 
     def str(self):
         return f"Message in {self.chat}"
+
+
