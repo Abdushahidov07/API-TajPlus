@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chats</title>
+</head>
+<body>
+    <h1>Chats</h1>
+    <a href="{% url 'chat_create' %}">Create New Chat</a>
+    <ul>
+        {% for chat in chats %}
+        <li>
+            <a href="{% url 'chat_detail' chat.id %}">{{ chat.request.title }} - {{ chat.customer.username }}</a>
+            <a href="{% url 'chat_update' chat.id %}">Edit</a>
+            <a href="{% url 'chat_delete' chat.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

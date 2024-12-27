@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ chat.request.title }} - Chat</title>
+</head>
+<body>
+    <h1>{{ chat.request.title }} - Chat</h1>
+    <p><strong>Customer:</strong> {{ chat.customer.username }}</p>
+    <p><strong>Master:</strong> {{ chat.master.username }}</p>
+    <p><strong>Status:</strong> {{ chat.is_active }}</p>
+
+    <a href="{% url 'chat_update' chat.id %}">Edit</a>
+    <a href="{% url 'chat_delete' chat.id %}">Delete</a>
+    <a href="{% url 'chat_list' %}">Back to List</a>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if skill %}Update Skill{% else %}Add Skill{% endif %}</title>
+</head>
+<body>
+    <h1>{% if skill %}Update Skill{% else %}Add Skill{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if skill %}Update{% else %}Add{% endif %}</button>
+    </form>
+    <a href="{% url 'skill_list' %}">Back to List</a>
+</body>
+</html>

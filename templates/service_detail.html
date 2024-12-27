@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ service.title }}</title>
+</head>
+<body>
+    <h1>{{ service.title }}</h1>
+    <p><strong>Description:</strong> {{ service.description }}</p>
+    <p><strong>Price:</strong> ${{ service.price }}</p>
+    <p><strong>Category:</strong> {{ service.category.name }}</p>
+    <p><strong>Skills:</strong> {% for skill in service.skills.all %}{{ skill.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Status:</strong> {{ service.status }}</p>
+    <p><strong>Active:</strong> {{ service.is_active }}</p>
+    <img src="{{ service.image.url }}" alt="{{ service.title }}" style="max-width: 300px;">
+    
+    <a href="{% url 'service_update' service.id %}">Edit</a>
+    <a href="{% url 'service_delete' service.id %}">Delete</a>
+    <a href="{% url 'service_list' %}">Back to List</a>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Services</title>
+</head>
+<body>
+    <h1>Application Services</h1>
+    <a href="{% url 'application_service_create' %}">Create New Application Service</a>
+    <ul>
+        {% for application in applications %}
+        <li>
+            <a href="{% url 'application_service_detail' application.id %}">{{ application.request.title }}</a>
+            <a href="{% url 'application_service_update' application.id %}">Edit</a>
+            <a href="{% url 'application_service_delete' application.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ application.request.title }} - Application Service</title>
+</head>
+<body>
+    <h1>{{ application.request.title }} - Application Service</h1>
+    <p><strong>Description:</strong> {{ application.descriptions }}</p>
+    <p><strong>Status:</strong> {{ application.status }}</p>
+    <p><strong>Master:</strong> {{ application.master.username }}</p>
+    <p><strong>Active:</strong> {{ application.is_active }}</p>
+    
+    <a href="{% url 'application_service_update' application.id %}">Edit</a>
+    <a href="{% url 'application_service_delete' application.id %}">Delete</a>
+    <a href="{% url 'application_service_list' %}">Back to List</a>
+</body>
+</html>

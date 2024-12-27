@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from con import views as con_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('apis.urls')),
+    path('con/',include('con.urls')),
+    path('home/', con_views.home, name='home'),  # Root URL points to the home view       
+
 ]

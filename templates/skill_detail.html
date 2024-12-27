@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Detail</title>
+</head>
+<body>
+    <h1>{{ skill.name }}</h1>
+    {% if skill.image %}
+        <p><img src="{{ skill.image.url }}" alt="{{ skill.name }}" style="max-width:300px;"></p>
+    {% endif %}
+    <a href="{% url 'skill_update' skill.id %}">Edit</a>
+    <a href="{% url 'skill_delete' skill.id %}">Delete</a>
+    <a href="{% url 'skill_list' %}">Back to List</a>
+</body>
+</html>

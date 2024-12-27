@@ -1,0 +1,15 @@
+<!-- message_detail.html -->
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Message Detail</h2>
+  <p><strong>Chat:</strong> {{ message.chat }}</p>
+  <p><strong>Sender:</strong> {{ message.sender }}</p>
+  <p><strong>Message Text:</strong> {{ message.message_text }}</p>
+  <p><strong>Created At:</strong> {{ message.created_at }}</p>
+  {% if message.image %}
+    <img src="{{ message.image.url }}" alt="Image">
+  {% endif %}
+  <a href="{% url 'message_update' message.pk %}">Edit</a> |
+  <a href="{% url 'message_delete' message.pk %}">Delete</a>
+{% endblock %}

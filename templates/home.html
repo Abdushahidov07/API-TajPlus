@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Home</h1>
+        <p>Welcome to the application! Use the links below to navigate to the various sections:</p>
+        <ul>
+            <!-- Profile Links -->
+            <li><a href="{% url 'profile_list' %}">View Profiles</a></li>
+            <li><a href="{% url 'profile_create' %}">Create a Profile</a></li>
+            
+            <!-- Service Request Links -->
+            <li><a href="{% url 'service_request_list' %}">View Service Requests</a></li>
+            <li><a href="{% url 'service_request_create' %}">Create a Service Request</a></li>
+
+            <!-- Service Links -->
+            <li><a href="{% url 'service_list' %}">View Services</a></li>
+            <li><a href="{% url 'service_create' %}">Create a Service</a></li>
+
+            <!-- Application Service Links -->
+            <li><a href="{% url 'application_service_list' %}">View Application Services</a></li>
+            <li><a href="{% url 'application_service_create' %}">Create an Application Service</a></li>
+
+            <!-- Chat Links -->
+            <li><a href="{% url 'chat_list' %}">View Chats</a></li>
+            <li><a href="{% url 'chat_create' %}">Start a Chat</a></li>
+
+            <!-- Message Links -->
+            <li><a href="{% url 'message_list' %}">View Messages</a></li>
+            <li><a href="{% url 'message_create' %}">Create a Message</a></li>
+        </ul>
+    </div>
+</body>
+</html>

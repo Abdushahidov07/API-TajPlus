@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill List</title>
+</head>
+<body>
+    <h1>Skill List</h1>
+    <a href="{% url 'skill_create' %}">Add New Skill</a>
+    <ul>
+        {% for skill in skills %}
+        <li>
+            <a href="{% url 'skill_detail' skill.id %}">{{ skill.name }}</a>
+            <a href="{% url 'skill_update' skill.id %}">Edit</a>
+            <a href="{% url 'skill_delete' skill.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

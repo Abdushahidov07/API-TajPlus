@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if category %}Update Category{% else %}Add Category{% endif %}</title>
+</head>
+<body>
+    <h1>{% if category %}Update Category{% else %}Add Category{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if category %}Update{% else %}Add{% endif %}</button>
+    </form>
+    <a href="{% url 'category_list' %}">Back to List</a>
+</body>
+</html>

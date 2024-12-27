@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Category List</title>
+</head>
+<body>
+    <h1>Category List</h1>
+    <a href="{% url 'category_create' %}">Add New Category</a>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
+            <a href="{% url 'category_update' category.id %}">Edit</a>
+            <a href="{% url 'category_delete' category.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

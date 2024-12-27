@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Application Service</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this application service?</h1>
+    <p><strong>Request:</strong> {{ application.request.title }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Deletion</button>
+    </form>
+    <a href="{% url 'application_service_list' %}">Cancel</a>
+</body>
+</html>

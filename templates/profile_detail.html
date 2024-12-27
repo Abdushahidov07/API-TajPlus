@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Detail</title>
+</head>
+<body>
+    <h1>Profile of {{ profile.user.username }}</h1>
+    <p><strong>Skills:</strong> {{ profile.skills.all|join:", " }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    <p><strong>Remote:</strong> {{ profile.remote }}</p>
+    <p><strong>Biography:</strong> {{ profile.biography }}</p>
+    <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+    <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}" style="max-width: 300px;">
+
+    <a href="{% url 'profile_update' profile.id %}">Edit</a>
+    <a href="{% url 'profile_delete' profile.id %}">Delete</a>
+    <a href="{% url 'profile_list' %}">Back to List</a>
+</body>
+</html>
