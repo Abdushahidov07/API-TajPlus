@@ -1,19 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #5bc0de;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        a:hover {
+            background-color: #31b0d5;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li a {
+            background-color: #f0ad4e;
+        }
+
+        li a:hover {
+            background-color: #ec971f;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Service Requests</h1>
-    <a href="{% url 'service_request_create' %}">Create New Service Request</a>
-    <ul>
-        {% for service_request in service_requests %}
-        <li>
-            <a href="{% url 'service_request_detail' service_request.id %}">{{ service_request.title }}</a>
-            <a href="{% url 'service_request_update' service_request.id %}">Edit</a>
-            <a href="{% url 'service_request_delete' service_request.id %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
+
+    <div class="container">
+        <h1>Service Requests</h1>
+
+        <a href="{% url 'service_request_create' %}">Create New Service Request</a>
+
+        <ul>
+            {% for service_request in service_requests %}
+            <li>
+                <span>{{ service_request.title }}</span>
+                <div class="actions">
+                    <a href="{% url 'service_request_detail' service_request.id %}">View</a>
+                    <a href="{% url 'service_request_update' service_request.id %}">Edit</a>
+                    <a href="{% url 'service_request_delete' service_request.id %}">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

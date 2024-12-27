@@ -1,19 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category List</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin: 0 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .add-category {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .actions a {
+            margin-left: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Button styles */
+        .button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Category List</h1>
-    <a href="{% url 'category_create' %}">Add New Category</a>
-    <ul>
-        {% for category in categories %}
-        <li>
-            <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
-            <a href="{% url 'category_update' category.id %}">Edit</a>
-            <a href="{% url 'category_delete' category.id %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Category List</h1>
+        
+        <!-- Add New Category Link -->
+        <div class="add-category">
+            <a href="{% url 'category_create' %}" class="button">Add New Category</a>
+        </div>
+        
+        <!-- Categories List -->
+        <ul>
+            {% for category in categories %}
+            <li>
+                <div class="category-name">
+                    <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
+                </div>
+                <div class="actions">
+                    <a href="{% url 'category_update' category.id %}" class="button">Edit</a>
+                    <a href="{% url 'category_delete' category.id %}" class="button">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

@@ -1,18 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Chat</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        strong {
+            color: #007BFF;
+        }
+
+        .form-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel-button {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .cancel-button:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Are you sure you want to delete this chat?</h1>
-    <p><strong>Request:</strong> {{ chat.request.title }}</p>
-    <p><strong>Customer:</strong> {{ chat.customer.username }}</p>
-    <p><strong>Master:</strong> {{ chat.master.username }}</p>
-    
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirm Deletion</button>
-    </form>
-    <a href="{% url 'chat_list' %}">Cancel</a>
+
+    <div class="container">
+        <h1>Confirm Chat Deletion</h1>
+
+        <p><strong>Request:</strong> {{ chat.request.title }}</p>
+        <p><strong>Customer:</strong> {{ chat.customer.username }}</p>
+        <p><strong>Master:</strong> {{ chat.master.username }}</p>
+
+        <form method="post" class="form-container">
+            {% csrf_token %}
+            <button type="submit" class="button">Confirm Deletion</button>
+        </form>
+
+        <a href="{% url 'chat_list' %}" class="cancel-button">Cancel</a>
+    </div>
+
 </body>
 </html>

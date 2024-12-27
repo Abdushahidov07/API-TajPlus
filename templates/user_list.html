@@ -1,19 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .add-user {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li a {
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>User List</h1>
-    <a href="{% url 'user_create' %}">Create New User</a>
-    <ul>
-        {% for user in users %}
-        <li>
-            <a href="{% url 'user_detail' user.id %}">{{ user.username }}</a>
-            <a href="{% url 'user_update' user.id %}">Edit</a>
-            <a href="{% url 'user_delete' user.id %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
+
+    <div class="container">
+        <h1>User List</h1>
+        <a href="{% url 'user_create' %}" class="add-user">Create New User</a>
+
+        <ul>
+            {% for user in users %}
+                <li>
+                    <span>{{ user.username }}</span>
+                    <div class="action-links">
+                        <a href="{% url 'user_detail' user.id %}">View</a>
+                        <a href="{% url 'user_update' user.id %}">Edit</a>
+                        <a href="{% url 'user_delete' user.id %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

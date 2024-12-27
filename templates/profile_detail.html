@@ -1,19 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            max-width: 300px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .action-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .action-links a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            background-color: #007BFF;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-links a:hover {
+            background-color: #0056b3;
+        }
+
+        .action-links a.cancel {
+            background-color: #f0ad4e;
+        }
+
+        .action-links a.cancel:hover {
+            background-color: #ec971f;
+        }
+    </style>
 </head>
 <body>
-    <h1>Profile of {{ profile.user.username }}</h1>
-    <p><strong>Skills:</strong> {{ profile.skills.all|join:", " }}</p>
-    <p><strong>Address:</strong> {{ profile.address }}</p>
-    <p><strong>Remote:</strong> {{ profile.remote }}</p>
-    <p><strong>Biography:</strong> {{ profile.biography }}</p>
-    <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
-    <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}" style="max-width: 300px;">
+    <div class="container">
+        <h1>Profile of {{ profile.user.username }}</h1>
+        <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}" class="profile-image">
+        
+        <div class="profile-info">
+            <p><strong>Skills:</strong> {{ profile.skills.all|join:", " }}</p>
+            <p><strong>Address:</strong> {{ profile.address }}</p>
+            <p><strong>Remote:</strong> {{ profile.remote }}</p>
+            <p><strong>Biography:</strong> {{ profile.biography }}</p>
+            <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+        </div>
 
-    <a href="{% url 'profile_update' profile.id %}">Edit</a>
-    <a href="{% url 'profile_delete' profile.id %}">Delete</a>
-    <a href="{% url 'profile_list' %}">Back to List</a>
+        <div class="action-links">
+            <a href="{% url 'profile_update' profile.id %}">Edit</a>
+            <a href="{% url 'profile_delete' profile.id %}">Delete</a>
+            <a href="{% url 'profile_list' %}" class="cancel">Back to List</a>
+        </div>
+    </div>
 </body>
 </html>

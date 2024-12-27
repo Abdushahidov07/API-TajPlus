@@ -1,19 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #5bc0de;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #5bc0de;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #31b0d5;
+        }
+
+        .service-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .service-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-list li a {
+            margin-right: 15px;
+        }
+
+        .service-list li .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .create-service-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: block;
+            width: max-content;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .create-service-btn:hover {
+            background-color: #31b0d5;
+        }
+    </style>
 </head>
 <body>
-    <h1>Services</h1>
-    <a href="{% url 'service_create' %}">Create New Service</a>
-    <ul>
-        {% for service in services %}
-        <li>
-            <a href="{% url 'service_detail' service.id %}">{{ service.title }}</a>
-            <a href="{% url 'service_update' service.id %}">Edit</a>
-            <a href="{% url 'service_delete' service.id %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
+
+    <div class="container">
+        <a href="{% url 'service_create' %}" class="create-service-btn">Create New Service</a>
+
+        <h1>Services</h1>
+        
+        <ul class="service-list">
+            {% for service in services %}
+            <li>
+                <a href="{% url 'service_detail' service.id %}">{{ service.title }}</a>
+                <div class="actions">
+                    <a href="{% url 'service_update' service.id %}">Edit</a>
+                    <a href="{% url 'service_delete' service.id %}">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

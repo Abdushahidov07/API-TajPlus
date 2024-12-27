@@ -1,15 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Delete Application Service</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #d9534f;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        button, a {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s ease;
+        }
+
+        button {
+            background-color: #d9534f;
+        }
+
+        button:hover {
+            background-color: #c9302c;
+        }
+
+        a {
+            background-color: #5bc0de;
+        }
+
+        a:hover {
+            background-color: #31b0d5;
+        }
+    </style>
 </head>
 <body>
-    <h1>Are you sure you want to delete this application service?</h1>
-    <p><strong>Request:</strong> {{ application.request.title }}</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirm Deletion</button>
-    </form>
-    <a href="{% url 'application_service_list' %}">Cancel</a>
+    <div class="container">
+        <h1>Confirm Deletion</h1>
+        <p><strong>Request:</strong> {{ application.request.title }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="button-group">
+                <button type="submit">Confirm Deletion</button>
+                <a href="{% url 'application_service_list' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
