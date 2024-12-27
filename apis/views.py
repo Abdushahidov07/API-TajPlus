@@ -9,8 +9,9 @@ from django.contrib.auth import authenticate
 from .models import *
 from .serializers import *
 from .permissions import IsMasterOrReadOnly, IsServiceOwner, CanChangeServiceStatus
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
-# Authentication Views
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (permissions.AllowAny,)
@@ -32,6 +33,31 @@ class RegisterView(generics.CreateAPIView):
 class LoginView(APIView):
     permission_classes = (permissions.AllowAny,)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['username', 'password'],
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username or phone number'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='User password'),
+            }
+        ),
+        responses={
+            200: openapi.Response(
+                description="Successful login",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'user': openapi.Schema(type=openapi.TYPE_OBJECT),
+                        'access': openapi.Schema(type=openapi.TYPE_STRING),
+                        'refresh': openapi.Schema(type=openapi.TYPE_STRING),
+                    }
+                )
+            ),
+            401: 'Invalid credentials'
+        },
+        operation_description="Authenticate user and return JWT tokens"
+    )
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -54,7 +80,6 @@ class LoginView(APIView):
             'refresh': str(refresh)
         })
 
-# User Views
 class UserListView(generics.ListAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
@@ -71,7 +96,6 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance.is_active = False
         instance.save()
 
-# Profile Views
 class ProfileListView(generics.ListAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -89,7 +113,6 @@ class ProfileDetailView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
 
-# Skill Views
 class SkillListView(generics.ListAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
@@ -109,7 +132,6 @@ class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SkillSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-# Category Views
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -129,7 +151,6 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-# Service Request Views
 class ServiceRequestListCreateView(generics.ListCreateAPIView):
     serializer_class = ServiceRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -163,7 +184,6 @@ class ServiceRequestDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance.is_active = False
         instance.save()
 
-# Application Service Views
 class ApplicationServiceListCreateView(generics.ListCreateAPIView):
     serializer_class = ApplicationServiceSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -183,11 +203,9 @@ class ApplicationServiceListCreateView(generics.ListCreateAPIView):
             )
         try:
             profile = Profile.objects.get(user=self.request.user)
-            application = serializer.save(master=profile, status='PD')  # PD - Pending/В ожидании
+            application = serializer.save(master=profile, status='PD') 
             
-            # Если это заявка от мастера к клиенту (отклик на запрос)
             if application.request:
-                # Автоматически создаем чат при создании заявки
                 Chat.objects.get_or_create(
                     request=application.request,
                     customer=application.request.user,
@@ -213,8 +231,8 @@ class ApplicationServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        # Если статус меняется на "Принята", создаем чат
-        if instance.status == 'AC':  # AC - Accepted/Принята
+
+        if instance.status == 'AC':  
             Chat.objects.get_or_create(
                 request=instance.request,
                 customer=instance.request.user,
@@ -224,7 +242,6 @@ class ApplicationServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
                 }
             )
 
-# Chat Views
 class ChatListCreateView(generics.ListCreateAPIView):
     serializer_class = ChatSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -253,7 +270,6 @@ class ChatDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance.is_active = False
         instance.save()
 
-# Message Views
 class MessageListCreateView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -274,7 +290,6 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Message.objects.filter(sender=self.request.user)
 
-# Service Views
 class ServiceListCreateView(generics.ListCreateAPIView):
     serializer_class = ServiceSerializer
     permission_classes = [permissions.IsAuthenticated, IsMasterOrReadOnly]
