@@ -33,7 +33,7 @@ class User(AbstractUser):
         verbose_name='user permissions',
     )
 
-    def str(self):
+    def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
 
     @property
@@ -48,13 +48,13 @@ class Skill(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='media/skills/', null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Profile(models.Model):
@@ -66,7 +66,7 @@ class Profile(models.Model):
     biography = models.TextField(null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return f"{self.user.username}'s Profile"
 
 class ServiceRequest(models.Model):
@@ -96,7 +96,7 @@ class ServiceRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return f"{self.title} ({self.get_status_display()})"
 
 class Service(models.Model):
@@ -122,7 +122,7 @@ class Service(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def str(self):
+    def __str__(self):
         return f"{self.title} ({self.get_status_display()})"
 
 class ApplicationService(models.Model):
@@ -145,7 +145,7 @@ class ApplicationService(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return f"Заявка от {self.master.user.username} на {self.request.title} ({self.get_status_display()})"
 
 class Chat(models.Model):
@@ -157,7 +157,7 @@ class Chat(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return f"Chat for {self.request.title}"
 
 class Message(models.Model):
@@ -167,7 +167,7 @@ class Message(models.Model):
     image = models.ImageField(upload_to='media/messages/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
         return f"Message in {self.chat}"
 
 

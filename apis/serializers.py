@@ -36,12 +36,12 @@ class UserSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = 'all'
+        fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = 'all'
+        fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -49,7 +49,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Profile
-        fields = 'all'
+        fields = '__all__'
 
 class ServiceRequestSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -58,7 +58,7 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ServiceRequest
-        fields = 'all'
+        fields = '__all__'
         read_only_fields = ('is_active', 'is_deleted', 'created_at', 'deleted_at')
 
 class ServiceRequestCreateSerializer(serializers.ModelSerializer):
@@ -86,7 +86,7 @@ class MessageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Message
-        fields = 'all'
+        fields = '__all__'
         read_only_fields = ('created_at',)
 
 class ChatSerializer(serializers.ModelSerializer):
@@ -96,7 +96,7 @@ class ChatSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Chat
-        fields = 'all'
+        fields = '__all__'
         read_only_fields = ('is_active', 'is_deleted', 'created_at', 'deleted_at')
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -106,7 +106,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Service
-        fields = 'all'
+        fields = '__all__'
         read_only_fields = ('status', 'is_active', 'created_at', 'updated_at')
 
 class ServiceCreateSerializer(serializers.ModelSerializer):
