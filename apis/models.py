@@ -7,7 +7,7 @@ class User(AbstractUser):
         CLIENT = 'CL', 'Клиент'
         MASTER = 'MS', 'Мастер'
 
-    phone = models.CharField(max_length=15, unique=True)
+    phone = models.CharField(max_length=15, unique=True, null=True, blank=True)
     role = models.CharField(
         max_length=2, 
         choices=UserRole.choices, 
@@ -32,6 +32,13 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
         verbose_name='user permissions',
     )
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.role = self.UserRole.CLIENT  # Default role for superuser
+            if not self.phone:  # Allow empty phone for superuser
+                self.phone = None
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
@@ -169,5 +176,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message in {self.chat}"
-
-

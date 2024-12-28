@@ -1,12 +1,18 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from . import views
+from . import admin_views
 from . import auth_views
 from django.contrib.auth.decorators import login_required
 
 app_name = 'apis'
 
 urlpatterns = [
+    # Admin Panel URLs
+    path('dashboard/login/', admin_views.admin_login, name='admin_login'),
+    path('dashboard/logout/', admin_views.admin_logout, name='admin_logout'),
+    path('dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
+    
     # API URLs
     path('auth/register/', views.RegisterView.as_view(), name='register'),
     path('auth/login/', views.LoginView.as_view(), name='login'),

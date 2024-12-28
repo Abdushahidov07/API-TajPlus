@@ -38,39 +38,56 @@
         .sidebar {
             width: 280px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
             height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            color: white;
-            padding: 20px;
-            transition: all 0.3s ease;
-            transform: translateX(0);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
             z-index: 1000;
         }
 
-        .sidebar.collapsed {
-            transform: translateX(-240px);
+        /* Webkit Scrollbar Styles */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .sidebar-header {
+            padding: 20px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
             font-size: 24px;
             font-weight: 600;
+            color: white;
+            text-decoration: none;
         }
 
         .toggle-btn {
             background: none;
             border: none;
             color: white;
-            cursor: pointer;
             font-size: 20px;
+            cursor: pointer;
             padding: 5px;
         }
 
@@ -79,27 +96,79 @@
             flex-direction: column;
             gap: 5px;
             padding: 15px;
+            padding-bottom: 30px;
+            height: calc(100vh - 80px); /* Subtract header height */
+            overflow-y: auto;
         }
 
         .nav-link {
             text-decoration: none;
-            color: white;
+            color: rgba(255, 255, 255, 0.8);
             padding: 12px 15px;
             border-radius: 8px;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            transition: all 0.3s ease;
         }
 
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
+            color: white;
         }
 
         .nav-link i {
+            font-size: 18px;
             width: 20px;
             text-align: center;
+        }
+
+        /* User Info Styles */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-details h3 {
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        .user-details p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        .nav-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.logout {
+            color: #ff6b6b;
+        }
+
+        .nav-link.logout:hover {
+            background: rgba(255, 107, 107, 0.1);
         }
 
         /* Main Content Styles */
@@ -107,11 +176,11 @@
             flex: 1;
             margin-left: 280px;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: margin-left 0.3s ease;
         }
 
         .main-content.expanded {
-            margin-left: 40px;
+            margin-left: 0;
         }
 
         .page-header {
@@ -254,22 +323,143 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
-                transform: translateX(-280px);
+                transform: translateX(-100%);
+                width: 100%;
+                max-width: 300px;
+                transition: transform 0.3s ease;
             }
-            .sidebar.collapsed {
+
+            .sidebar.active {
                 transform: translateX(0);
             }
+
             .main-content {
                 margin-left: 0;
+                padding: 15px;
+                width: 100%;
             }
+
             .main-content.expanded {
                 margin-left: 0;
+            }
+
+            /* Mobile overlay when sidebar is open */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+
+            /* Mobile header */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px;
+                background: white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                margin-bottom: 20px;
+            }
+
+            .mobile-header .logo {
+                color: var(--primary-color);
+                font-size: 20px;
+            }
+
+            .mobile-header .menu-btn {
+                background: none;
+                border: none;
+                color: var(--primary-color);
+                font-size: 20px;
+                cursor: pointer;
+                padding: 5px;
+            }
+
+            /* Adjust table for mobile */
+            .table-responsive {
+                margin: 0 -15px;
+                width: calc(100% + 30px);
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            /* Stack grid items on mobile */
+            .grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            /* Adjust card padding */
+            .card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            /* Adjust buttons for touch */
+            .btn {
+                padding: 10px 20px;
+                min-height: 44px;
+            }
+
+            /* Hide text in sidebar when collapsed */
+            .sidebar.collapsed .nav-link span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Mobile Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header d-md-none">
+        <button class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">TajPlus</div>
+        <div style="width: 40px;"></div><!-- Spacer for alignment -->
+    </div>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -280,7 +470,18 @@
         </div>
 
         <nav class="nav-links">
-            <a href="{% url 'home' %}" class="nav-link">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="avatar">
+                    {{ request.user.username|make_list|first|upper }}
+                </div>
+                <div class="user-details">
+                    <h3>{{ request.user.username }}</h3>
+                    <p>Administrator</p>
+                </div>
+            </div>
+
+            <a href="{% url 'apis:admin_dashboard' %}" class="nav-link">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
@@ -314,6 +515,14 @@
                 <i class="fas fa-envelope"></i>
                 <span>Messages</span>
             </a>
+
+            <!-- Add logout at the bottom -->
+            <div class="nav-footer">
+                <a href="{% url 'apis:admin_logout' %}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </nav>
     </div>
 
@@ -323,29 +532,43 @@
     </div>
 
     <script>
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
-        const toggleBtn = document.getElementById('toggleSidebar');
+        // Toggle Sidebar
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        const menuBtns = document.querySelectorAll('.toggle-btn, .menu-btn');
+        const mainContent = document.querySelector('.main-content');
 
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
+        menuBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                mainContent.classList.toggle('expanded');
+            });
         });
 
-        // Handle responsive design
-        function checkWidth() {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.add('collapsed');
-                mainContent.classList.add('expanded');
-            } else {
-                sidebar.classList.remove('collapsed');
-                mainContent.classList.remove('expanded');
-            }
-        }
+        // Close sidebar when clicking overlay
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
 
-        // Check on load and resize
-        window.addEventListener('load', checkWidth);
-        window.addEventListener('resize', checkWidth);
+        // Close sidebar when clicking a link on mobile
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Handle resize events
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                overlay.classList.remove('active');
+            }
+        });
     </script>
     {% block extra_js %}{% endblock %}
 </body>
