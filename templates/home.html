@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Home</title>
+    <title>TajPlus Admin</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -19,133 +18,439 @@
         body {
             font-family: 'Poppins', sans-serif;
             color: #333;
-            background: linear-gradient(135deg, #1e90ff, #00bcd4);
+            background: #f0f2f5;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
-        .container {
-            text-align: center;
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
             color: white;
-            margin: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+            z-index: 1000;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-240px);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+        }
+
+        .stats-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 40px;
+        }
+
+        .welcome-header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            animation: fadeInDown 1.5s ease;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 10px;
         }
 
-        p {
-            margin: 10px 0 20px;
+        .welcome-message {
             font-size: 1.2rem;
-            animation: fadeIn 2s ease;
+            color: #666;
+            margin-bottom: 20px;
         }
 
-        .btn-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        /* Statistics Grid Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-top: 20px;
-            animation: fadeInUp 2s ease;
         }
 
-        .btn {
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
         }
 
-        .btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+        .stats-card:hover {
+            transform: translateY(-5px);
         }
 
-        /* Animation Keyframes */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .stats-info {
+            flex: 1;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .stats-info h3 {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .stats-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 5px;
         }
 
-        footer {
-            margin-top: auto;
-            padding: 10px 0;
-            background-color: rgba(0, 0, 0, 0.2);
-            color: white;
-            width: 100%;
-            text-align: center;
+        .stats-growth {
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stats-growth.positive {
+            color: #00c853;
+        }
+
+        .stats-growth.negative {
+            color: #ff3d00;
+        }
+
+        .stats-growth span {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .chart-container {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-280px);
+            }
+            .sidebar.collapsed {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .main-content.expanded {
+                margin-left: 0;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Your Admin Panel</h1>
-        <p>Explore the various features and manage your data efficiently.</p>
-        <div class="btn-container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">TajPlus</div>
+            <button class="toggle-btn" id="toggleSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value">{{ user_count|default:"157" }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Income</div>
+                <div class="stat-value">$1,800</div>
+            </div>
+        </div>
+
+        <nav class="nav-links">
             <!-- Profile Links -->
-            <a href="{% url 'profile_list' %}" class="btn"><i class="fas fa-user"></i> View Profiles</a>
-            <a href="{% url 'profile_create' %}" class="btn"><i class="fas fa-user-plus"></i> Create Profile</a>
+            <a href="{% url 'profile_list' %}" class="nav-link">
+                <i class="fas fa-user"></i>
+                <span>View Profiles</span>
+            </a>
+            <a href="{% url 'profile_create' %}" class="nav-link">
+                <i class="fas fa-user-plus"></i>
+                <span>Create Profile</span>
+            </a>
 
             <!-- Service Request Links -->
-            <a href="{% url 'service_request_list' %}" class="btn"><i class="fas fa-clipboard-list"></i> View Requests</a>
-            <a href="{% url 'service_request_create' %}" class="btn"><i class="fas fa-plus"></i> New Request</a>
+            <a href="{% url 'service_request_list' %}" class="nav-link">
+                <i class="fas fa-clipboard-list"></i>
+                <span>View Requests</span>
+            </a>
+            <a href="{% url 'service_request_create' %}" class="nav-link">
+                <i class="fas fa-plus"></i>
+                <span>New Request</span>
+            </a>
 
             <!-- Service Links -->
-            <a href="{% url 'service_list' %}" class="btn"><i class="fas fa-cogs"></i> View Services</a>
-            <a href="{% url 'service_create' %}" class="btn"><i class="fas fa-plus-circle"></i> Add Service</a>
+            <a href="{% url 'service_list' %}" class="nav-link">
+                <i class="fas fa-cogs"></i>
+                <span>View Services</span>
+            </a>
+            <a href="{% url 'service_create' %}" class="nav-link">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Service</span>
+            </a>
 
-            <!-- Application Service Links -->
-            <a href="{% url 'application_service_list' %}" class="btn"><i class="fas fa-th-list"></i> Applications</a>
-            <a href="{% url 'application_service_create' %}" class="btn"><i class="fas fa-plus-square"></i> New Application</a>
+            <!-- Application Links -->
+            <a href="{% url 'application_service_list' %}" class="nav-link">
+                <i class="fas fa-th-list"></i>
+                <span>Applications</span>
+            </a>
+            <a href="{% url 'application_service_create' %}" class="nav-link">
+                <i class="fas fa-plus-square"></i>
+                <span>New Application</span>
+            </a>
 
             <!-- Chat Links -->
-            <a href="{% url 'chat_list' %}" class="btn"><i class="fas fa-comments"></i> Chats</a>
-            <a href="{% url 'chat_create' %}" class="btn"><i class="fas fa-comment-dots"></i> Start Chat</a>
+            <a href="{% url 'chat_list' %}" class="nav-link">
+                <i class="fas fa-comments"></i>
+                <span>Chats</span>
+            </a>
+            <a href="{% url 'chat_create' %}" class="nav-link">
+                <i class="fas fa-comment-dots"></i>
+                <span>Start Chat</span>
+            </a>
 
             <!-- Message Links -->
-            <a href="{% url 'message_list' %}" class="btn"><i class="fas fa-envelope"></i> Messages</a>
-            <a href="{% url 'message_create' %}" class="btn"><i class="fas fa-paper-plane"></i> New Message</a>
+            <a href="{% url 'message_list' %}" class="nav-link">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+            <a href="{% url 'message_create' %}" class="nav-link">
+                <i class="fas fa-paper-plane"></i>
+                <span>New Message</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="welcome-header">
+            <h1>Welcome to TajPlus Admin</h1>
+            <p class="welcome-message">Hello {% if user.is_authenticated %}{{ user.username }}{% else %}Guest{% endif %}</p>
+            <p>Manage your services and applications efficiently from one place.</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stats-card">
+                <div class="stats-info">
+                    <h3>Total Users</h3>
+                    <p class="stats-number">157</p>
+                    <p class="stats-growth positive">+12.5% <span>vs last month</span></p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="usersChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-info">
+                    <h3>Total Income</h3>
+                    <p class="stats-number">$1,800</p>
+                    <p class="stats-growth positive">+8.3% <span>vs last month</span></p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="incomeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-info">
+                    <h3>Active Services</h3>
+                    <p class="stats-number">24</p>
+                    <p class="stats-growth positive">+15.2% <span>vs last month</span></p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="servicesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-info">
+                    <h3>Pending Requests</h3>
+                    <p class="stats-number">12</p>
+                    <p class="stats-growth negative">-5.8% <span>vs last month</span></p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="requestsChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
-    <footer>
-        &copy; 2024 My Admin Panel
-    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const toggleBtn = document.getElementById('toggleSidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+
+        // Handle responsive design
+        function checkWidth() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+            } else {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+            }
+        }
+
+        // Check on load and resize
+        window.addEventListener('load', checkWidth);
+        window.addEventListener('resize', checkWidth);
+
+        // Chart configurations
+        function createDonutChart(canvasId, data, labels, colors) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            return new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderWidth: 0,
+                        cutout: '75%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create charts when the page loads
+        window.addEventListener('load', () => {
+            // Users Chart
+            createDonutChart('usersChart', 
+                [70, 30],
+                ['Active', 'Inactive'],
+                ['#1e3c72', '#e0e0e0']
+            );
+
+            // Income Chart
+            createDonutChart('incomeChart',
+                [80, 20],
+                ['Revenue', 'Expenses'],
+                ['#00c853', '#e0e0e0']
+            );
+
+            // Services Chart
+            createDonutChart('servicesChart',
+                [75, 25],
+                ['Active', 'Inactive'],
+                ['#2196f3', '#e0e0e0']
+            );
+
+            // Requests Chart
+            createDonutChart('requestsChart',
+                [40, 60],
+                ['Pending', 'Completed'],
+                ['#ff9800', '#e0e0e0']
+            );
+        });
+    </script>
 </body>
 </html>

@@ -1,112 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+{% block title %}Profiles - TajPlus Admin{% endblock %}
 
-        h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Profiles</h1>
+    <p>Manage user profiles and their information</p>
+</div>
 
-        .profile-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .profile-list li {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-list a {
-            color: #007BFF;
-            text-decoration: none;
-            padding: 5px;
-            transition: color 0.3s;
-        }
-
-        .profile-list a:hover {
-            color: #0056b3;
-            text-decoration: underline;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .actions a {
-            padding: 8px 12px;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .actions a:hover {
-            background-color: #0056b3;
-        }
-
-        .add-new-profile {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-bottom: 20px;
-        }
-
-        .add-new-profile:hover {
-            background-color: #218838;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>Profile List</h1>
-        
-        <a href="{% url 'profile_create' %}" class="add-new-profile">Add New Profile</a>
-        
-        <ul class="profile-list">
-            {% for profile in profiles %}
-                <li>
-                    <a href="{% url 'profile_detail' profile.id %}">{{ profile.user.username }}</a>
-                    <div class="actions">
-                        <a href="{% url 'profile_update' profile.id %}">Edit</a>
-                        <a href="{% url 'profile_delete' profile.id %}">Delete</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+<div class="card">
+    <div class="actions-bar">
+        <a href="{% url 'profile_create' %}" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Add New Profile
+        </a>
     </div>
 
-</body>
-</html>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in profiles %}
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="avatar">{{ profile.user.username|make_list|first|upper }}</div>
+                            <span>{{ profile.user.username }}</span>
+                        </div>
+                    </td>
+                    <td>{{ profile.full_name|default:"Not provided" }}</td>
+                    <td>{{ profile.user.email|default:"Not provided" }}</td>
+                    <td>
+                        <span class="status-badge {% if profile.is_active %}status-active{% else %}status-inactive{% endif %}">
+                            {% if profile.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{% url 'profile_detail' profile.id %}" class="btn-icon" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'profile_update' profile.id %}" class="btn-icon" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'profile_delete' profile.id %}" class="btn-icon delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-state">
+                        <div class="empty-state-content">
+                            <i class="fas fa-users"></i>
+                            <p>No profiles found</p>
+                            <a href="{% url 'profile_create' %}" class="btn btn-primary">Create First Profile</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .actions-bar {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .avatar {
+        width: 35px;
+        height: 35px;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+
+    .status-badge {
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background: #e8f5e9;
+        color: var(--success-color);
+    }
+
+    .status-inactive {
+        background: #ffebee;
+        color: var(--danger-color);
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-light);
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+    .btn-icon:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-icon.delete:hover {
+        background: var(--danger-color);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px !important;
+    }
+
+    .empty-state-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .empty-state-content i {
+        font-size: 3rem;
+        color: var(--text-light);
+    }
+
+    .empty-state-content p {
+        color: var(--text-light);
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}
