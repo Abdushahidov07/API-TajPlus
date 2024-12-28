@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ service_request.title }} - Service Request Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .image-container img {
+            max-width: 300px;
+            border-radius: 5px;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .action-buttons a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #5bc0de;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .action-buttons a:hover {
+            background-color: #31b0d5;
+        }
+
+        .back-button {
+            background-color: #f0ad4e;
+        }
+
+        .back-button:hover {
+            background-color: #ec971f;
+        }
+
+        .edit-button {
+            background-color: #5bc0de;
+        }
+
+        .edit-button:hover {
+            background-color: #31b0d5;
+        }
+
+        .delete-button {
+            background-color: #d9534f;
+        }
+
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>{{ service_request.title }}</h1>
+        
+        <p><strong>Description:</strong> {{ service_request.description }}</p>
+        <p><strong>Location:</strong> {{ service_request.location }}</p>
+        <p><strong>Price Range:</strong> ${{ service_request.price_min }} - ${{ service_request.price_max }}</p>
+        <p><strong>Category:</strong> {{ service_request.category.name }}</p>
+        <p><strong>Skills:</strong> {% for skill in service_request.skills.all %}{{ skill.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        <p><strong>Status:</strong> {{ service_request.status }}</p>
+        <p><strong>Active:</strong> {{ service_request.is_active }}</p>
+
+        <div class="image-container">
+            <img src="{{ service_request.image.url }}" alt="{{ service_request.title }}">
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'service_request_update' service_request.id %}" class="edit-button">Edit</a>
+            <a href="{% url 'service_request_delete' service_request.id %}" class="delete-button">Delete</a>
+            <a href="{% url 'service_request_list' %}" class="back-button">Back to List</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chat.request.title }} - Chat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        a {
+            display: inline-block;
+            margin: 10px 15px 10px 0;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        .actions {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chat Details - {{ chat.request.title }}</h1>
+    </header>
+
+    <div class="container">
+        <p><strong>Customer:</strong> {{ chat.customer.username }}</p>
+        <p><strong>Master:</strong> {{ chat.master.username }}</p>
+        <p><strong>Status:</strong> {{ chat.is_active }}</p>
+
+        <div class="actions">
+            <a href="{% url 'chat_update' chat.id %}">Edit</a>
+            <a href="{% url 'chat_delete' chat.id %}">Delete</a>
+            <a href="{% url 'chat_list' %}">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

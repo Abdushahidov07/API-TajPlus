@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Services</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1rem;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li a {
+            margin-left: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons a {
+            padding: 5px 10px;
+            background-color: #5bc0de;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons a:hover {
+            background-color: #31b0d5;
+        }
+
+        .create-button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            background-color: #5bc0de;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-button:hover {
+            background-color: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Application Services</h1>
+        
+        <!-- Create New Application Service Button -->
+        <a class="create-button" href="{% url 'application_service_create' %}">Create New Application Service</a>
+
+        <!-- List of Application Services -->
+        <ul>
+            {% for application in applications %}
+                <li>
+                    <div>
+                        <strong>{{ application.request.title }}</strong>
+                    </div>
+
+                    <div class="action-buttons">
+                        <!-- Edit and Delete Links -->
+                        <a href="{% url 'application_service_detail' application.id %}">View</a>
+                        <a href="{% url 'application_service_update' application.id %}">Edit</a>
+                        <a href="{% url 'application_service_delete' application.id %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

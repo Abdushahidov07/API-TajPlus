@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .message-detail-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-info p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .message-info strong {
+            color: #007bff;
+        }
+
+        .message-image {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .message-image-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+
+        .action-links .delete-link {
+            color: #d9534f;
+        }
+
+        .action-links .delete-link:hover {
+            color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-detail-container">
+        <h2>Message Detail</h2>
+        <div class="message-info">
+            <p><strong>Chat:</strong> {{ message.chat }}</p>
+            <p><strong>Sender:</strong> {{ message.sender }}</p>
+            <p><strong>Message Text:</strong> {{ message.message_text }}</p>
+            <p><strong>Created At:</strong> {{ message.created_at }}</p>
+
+            {% if message.image %}
+                <div class="message-image">
+                    <img src="{{ message.image.url }}" alt="Image" class="message-image-preview">
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="action-links">
+            <a href="{% url 'message_update' message.pk %}" class="edit-link">Edit</a> |
+            <a href="{% url 'message_delete' message.pk %}" class="delete-link">Delete</a>
+        </div>
+    </div>
+</body>
+</html>

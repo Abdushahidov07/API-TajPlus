@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Category</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .confirmation-message {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #555;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .action-buttons button,
+        .action-buttons a {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons button:hover,
+        .action-buttons a:hover {
+            background-color: #0056b3;
+        }
+
+        .action-buttons a {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .action-buttons a:hover {
+            background-color: #aaa;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Category</h1>
+        <p class="confirmation-message">Are you sure you want to delete the category "{{ category.name }}"?</p>
+
+        <!-- Delete Confirmation Form -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="action-buttons">
+                <button type="submit">Confirm</button>
+                <a href="{% url 'category_list' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

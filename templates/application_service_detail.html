@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ application.request.title }} - Application Service</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .details-section {
+            margin-bottom: 30px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .actions a {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #5bc0de;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions a:hover {
+            background-color: #31b0d5;
+        }
+
+        .actions a.delete {
+            background-color: #d9534f;
+        }
+
+        .actions a.delete:hover {
+            background-color: #c9302c;
+        }
+
+        .actions a.edit {
+            background-color: #f0ad4e;
+        }
+
+        .actions a.edit:hover {
+            background-color: #ec971f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ application.request.title }} - Application Service</h1>
+
+        <div class="details-section">
+            <p><strong>Description:</strong> {{ application.descriptions }}</p>
+            <p><strong>Status:</strong> {{ application.status }}</p>
+            <p><strong>Master:</strong> {{ application.master.username }}</p>
+            <p><strong>Active:</strong> {{ application.is_active }}</p>
+        </div>
+
+        <div class="actions">
+            <a class="edit" href="{% url 'application_service_update' application.id %}">Edit</a>
+            <a class="delete" href="{% url 'application_service_delete' application.id %}">Delete</a>
+            <a href="{% url 'application_service_list' %}">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

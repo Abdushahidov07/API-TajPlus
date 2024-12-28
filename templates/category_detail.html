@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Detail - {{ category.name }}</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category-details {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-buttons a,
+        .action-buttons button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons a:hover,
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-buttons a {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .action-buttons a:hover {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ category.name }}</h1>
+
+        <!-- Category Details -->
+        <div class="category-details">
+            <p><strong>Name:</strong> {{ category.name }}</p>
+            <p><strong>Description:</strong> {{ category.description }}</p>
+            <!-- You can add more details if necessary -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="{% url 'category_update' category.id %}">Edit</a>
+            <a href="{% url 'category_delete' category.id %}">Delete</a>
+            <a href="{% url 'category_list' %}">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

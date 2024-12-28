@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #d9534f;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            background-color: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c9302c;
+        }
+
+        a {
+            color: #f0ad4e;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            color: #ec971f;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Are you sure you want to delete the service "{{ service.title }}"?</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="confirmation-buttons">
+                <button type="submit">Confirm</button>
+                <a href="{% url 'service_list' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
