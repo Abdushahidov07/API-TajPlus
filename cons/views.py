@@ -266,6 +266,7 @@ class MessageCreate(CreateView):
     template_name = 'message_form.html'
     fields = ['chat', 'sender', 'message_text', 'image']
     success_url = reverse_lazy('message_list')  
+    
 class MessageUpdate(UpdateView):
     model = Message
     template_name = 'message_form.html'
@@ -283,3 +284,10 @@ from django.shortcuts import render
 # Home page view
 def home(request):
     return render(request, 'home.html')
+
+
+
+
+
+
+

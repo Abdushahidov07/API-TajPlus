@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if object %}Update{% else %}Create{% endif %} Message</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4A90E2;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        textarea {
+            height: 150px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4A90E2;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357ABD;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        .back-link a {
+            color: #4A90E2;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .confirmation-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>{% if object %}Update{% else %}Create{% endif %} Message</h1>
+        
+        <form method="post" enctype="multipart/form-data" id="messageForm">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" id="submitButton">{% if object %}Update{% else %}Create{% endif %}</button>
+        </form>
+
+        <div class="confirmation-message" id="confirmationMessage">
+            Your message has been successfully {# form submission status #}!
+        </div>
+
+        <div class="back-link">
+            <a href="{% url 'message_list' %}">Back to Message List</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting immediately
+
+            // Simulate form submission process
+            setTimeout(function() {
+                // Show confirmation message after form submission
+                document.getElementById('confirmationMessage').style.display = 'block';
+                document.getElementById('submitButton').disabled = true;
+                document.getElementById('submitButton').innerText = 'Submitting...';
+                
+                // Simulate a successful form submission (or handle AJAX submission here)
+                setTimeout(function() {
+                    window.location.href = "{% url 'message_list' %}";
+                }, 2000);
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
