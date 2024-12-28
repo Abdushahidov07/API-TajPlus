@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     #home
-    path('home/', views.home, name='home'),
+    path('', views.home, name='home'),
     # User URLs
     path('users/', views.UserList.as_view(), name='user_list'),
     path('users/create/', views.UserCreate.as_view(), name='user_create'),
